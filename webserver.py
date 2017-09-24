@@ -1,6 +1,15 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
-
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+# The following codes will connect to the database
+# and query it for data, so that it can be presented on the
+# HTML page
+from database_setup import Restaurant, Base, MenuItem
+engine = create_engine('sqlite:///restaurantmenu.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 class webserverHandler(BaseHTTPRequestHandler):
     def do_GET(self):
