@@ -11,6 +11,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 class webserverHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
@@ -24,13 +25,15 @@ class webserverHandler(BaseHTTPRequestHandler):
                 output += "<html><body>"
                 for restaurant in restaurants:
                     output += restaurant.name
-                    output += "</br></br></br>"               
+                    output += "</br>"
+                    output += "<a href ='#'>Edit </a>&nbsp<a href ='#'> Delete</a></br></br>"
                 output += "</html></body>"
                 self.wfile.write(output)
                 print output
                 return
         except IOError:
             self.send_error(404, "File Not Found %s" % self.path)
+
 
 def main():
     try:
